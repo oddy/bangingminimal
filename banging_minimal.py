@@ -20,7 +20,7 @@ import paste
 app = Flask(__name__)
 
 app.config.update(
-    DEBUG = True,
+    DEBUG = False,
 
     SECRET_KEY      = os.urandom(16),          
     SQLALCHEMY_DATABASE_URI = 'sqlite:///./users.db',
