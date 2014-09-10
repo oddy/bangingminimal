@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pwn Oddy, Hack RBAC, Win $500 Bartab!</title>
+
+    {% block headbefore %}
+    {% endblock %}
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet">
+
+    <style type="text/css">
+      .marleft { margin-left: 10px; }
+      
+      .mardown { margin-bottom: 10px; } 
+      .paddown { padding-bottom: 10px;}
+
+      .marupbig { margin-top: 100px; }  
+      .mardownbig { margin-bottom: 100px;}
+      .bordon { border: 1px solid red; }
+
+      .embiggen { width:500px;}
+
+      code { color: #222222; }
+      blockquote { font-size: 100%; }
+      body { line-height: 1.6; }
+    </style>
+
+    {% block head %}
+    {% endblock %}
+
+  </head>
+  <body>
+    
+    {% block beforejses %}
+    {% endblock %}
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{{url_for('static',filename='js/jquery-1.11.1.min.js')}}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+    {% block afterjses %}
+    {% endblock %}
+
+    <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Pwn Oddy!</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/admin">Admin</a></li>
+          <li><a href="/edit">EDIT</a></li>
+        </ul>
+
+      <!--  {% if True or current_user.has_role('editor') %}
+        <form class="navbar-form navbar-left" action="/new" method="POST">
+        <button type="submit" class="btn btn-success btn-xs">New</button>
+        </form>
+        {% endif %}  -->
+    
+        <ul class="nav navbar-nav navbar-right">
+          {% if current_user.is_authenticated() %}
+            <li><p class="navbar-text">Signed in as {{ current_user.email }}</p></li>
+            <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
+          {% else %}
+          <li><a href="{{ url_for('security.register') }}">Register</a></li>
+            <li><a href="{{ url_for('security.login') }}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}            
+    <!-- Flash messages -->
+    <div class="container">
+      <div class="row">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          {{message}}
+        </div>
+        {% endfor %}
+      </div>
+    </div> <!-- /container -->
+    {% endif %}
+    {% endwith %}
+
+    <!-- MAIN PAGE AREA -->
+    <div class="container-fluid">   <!-- fluid=take up whole window, nonfluid=huge margins on either side -->
+
+      {% block body %}
+      {% endblock %}
+
+    </div>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <hr>
+        <footer>
+          <p>&copy;2010-2014 Pwn Oddy Ltd. Psych! Thats totally a made up company that i just made up.</p>
+        </footer> 
+      </div>
+    </div> <!-- /container -->
+
+  </body>
+</html>

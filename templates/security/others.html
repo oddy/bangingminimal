@@ -1,0 +1,49 @@
+
+{% extends "layout.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% set form = TheForm() %}
+{% set action = unicode(request.endpoint).replace('security.','') %}
+{% set formtitle = dict(register='Register new user',forgot_password='Send password recovery email', send_confirmation='Confirm email address', change_password='Change your password').get(action,'Oh Hai')  %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{formtitle}}</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" action="{{ url_for_security(action) }}" method="POST" name="fe_form">
+
+                        <fieldset>
+                            {{ form.hidden_tag() }}
+
+                            <!-- arr -->
+
+                            {%- for field in form %}
+
+                                {% if field.type == 'SubmitField' %}
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="{{field.label.text|safe}}">
+                                {% else %}
+                                    <div class="form-group {% if field.errors %} has-error{% endif %}">
+                                        <input class="form-control" placeholder="{{field.label.text|safe}}" name="{{field.name}}" type="{{field.widget.input_type}}">
+                                        {%- if field.errors %}{%- for error in field.errors %}<span class="help-block">{{error}}</span>{%- endfor %}{%- endif %}
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

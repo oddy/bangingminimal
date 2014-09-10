@@ -1,0 +1,47 @@
+
+{% extends "layout.html" %}
+
+{% block head %}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please sign in</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form" action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+
+                        <fieldset>
+                            {{ login_user_form.hidden_tag() }}
+                            <div class="form-group {% if login_user_form.email.errors %} has-error{% endif %}">
+                                <input class="form-control" placeholder="E-mail" name="email" type="text">
+                                {%- if login_user_form.email.errors %}{%- for error in login_user_form.email.errors %}<span class="help-block">{{error}}</span>{%- endfor %}{%- endif %}
+
+                            </div>
+                            <div class="form-group paddown {% if login_user_form.password.errors %} has-error{% endif %}">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                {%- if login_user_form.password.errors %}{%- for error in login_user_form.password.errors %}<span class="help-block">{{error}}</span>{%- endfor %}{%- endif %}
+                                <a href="/reset" class="pull-right">Forgot Password?</a>    
+                            </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                                </label>
+                            </div>                        
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
