@@ -1,0 +1,42 @@
+
+{% extends "layout.html" %}
+
+{% block head %}
+<style type="text/css">
+  .greyishback { background-color:grey; }     
+</style>
+{% endblock %}
+
+{% block afterjses %}
+{% endblock %}
+
+{% block body %}
+
+  <div class="row-fluid">
+
+    <div class="col-md-11">
+
+      <form class="form-horizontal" role="form" method="post", action="/edit">
+
+        <div class="form-group">
+          <label for="src" class="col-sm-1 control-label">Source</label>
+          <div class="col-sm-11">
+            <textarea class="form-control" rows="24" id="src" name="src" placeholder="Source" autocomplete="off">{{pagecontent}}</textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-1 col-sm-11">
+            <button type="submit" class="btn btn-default btn-success" name="saveshow">Save</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+{% endblock %}

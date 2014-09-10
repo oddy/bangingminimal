@@ -2,7 +2,7 @@
 # Minimal flask-security demo app!
 #import os, re, uuid, traceback, sys, time, csv, socket, itertools
 
-import os, sys
+import os, sys, shutil
 
 from   flask import Flask, request, Response, session, g, redirect, url_for, abort, send_file 
 from   flask import render_template, render_template_string, flash, send_from_directory, json, jsonify              # note use of flask's json
@@ -23,13 +23,13 @@ app.config.update(
     DEBUG = True,
 
     SECRET_KEY      = os.urandom(16),          
-    SQLALCHEMY_DATABASE_URI = 'sqlite://./users.db',
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///./users.db',
 
     MAIL_SERVER     = 'smtp.gmail.com',
     MAIL_PORT       = 465,
     MAIL_USE_SSL    = True,
     MAIL_USERNAME   = 'accounts@pwnoddy.com',
-    MAIL_PASSWORD   = '7D4d<VNE',
+    MAIL_PASSWORD   = 'AIo3ENJ53B5DXm9jnTm2',
     
     SECURITY_PASSWORD_HASH  = 'bcrypt',
     SECURITY_PASSWORD_SALT  = 'rock or table, ROCK OR TABLE!!!??',
@@ -113,13 +113,19 @@ def static_from_root():
 ###############################################################################
 #  SECURITY PROTECTION GOES HERE                                              #
 ###############################################################################
-@app.route('/edit')
+@app.route('/edit', methods=['GET','POST'])
+#@roles_accepted('editor')
 def Edit():
-    return render_template('edit.html')
+    if request.method == 'POST':
+        with open('pagecontent_dynamic.html','wt') as f:
+            f.write(request.form['src'])
+        return redirect(url_for('Root'))
+    else:
+        return render_template('edit.html', pagecontent=open('pagecontent_dynamic.html','r').read())
 
 @app.route('/')
 def Root():
-    return render_template('root.html')
+    return render_template('root.html', pagecontent=open('pagecontent_dynamic.html','r').read())
 
 # =========================== APP =============================================
 
@@ -153,6 +159,7 @@ def CreateRole(args):
 def MakeDB():
     print 'Doing db create_all...'
     sdb.create_all()
+    shutil.copyfile('pagecontent_pure.html','pagecontent_dynamic.html')
     print '...Done'
 
 
