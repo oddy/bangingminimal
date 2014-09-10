@@ -114,7 +114,7 @@ def static_from_root():
 #  SECURITY PROTECTION GOES HERE                                              #
 ###############################################################################
 @app.route('/edit', methods=['GET','POST'])
-#@roles_accepted('editor')
+@roles_accepted('editor')
 def Edit():
     if request.method == 'POST':
         with open('pagecontent_dynamic.html','wt') as f:
