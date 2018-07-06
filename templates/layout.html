@@ -74,7 +74,7 @@
         {% endif %}  -->
     
         <ul class="nav navbar-nav navbar-right">
-          {% if current_user.is_authenticated() %}
+          {% if current_user.is_authenticated %}
             <li><p class="navbar-text">Signed in as {{ current_user.email }}</p></li>
             <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
           {% else %}
